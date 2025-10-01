@@ -1,10 +1,14 @@
+import resolve from '@rollup/plugin-node-resolve';
+import typescript from '@rollup/plugin-typescript';
+
 export default {
-  input: 'dist/esm/index.js',
+  input: 'src/index.ts',
+  external: ['@capacitor/core'],
   output: [
     {
       file: 'dist/plugin.js',
       format: 'iife',
-      name: 'capacitorStripeReaders',
+      name: 'capacitorStripeTerminal',
       globals: {
         '@capacitor/core': 'capacitorExports',
       },
@@ -18,5 +22,14 @@ export default {
       inlineDynamicImports: true,
     },
   ],
-  external: ['@capacitor/core'],
+  plugins: [
+    typescript({
+      declaration: true,
+      declarationDir: 'dist/esm',
+      rootDir: 'src',
+    }),
+    resolve({
+      browser: true,
+    }),
+  ],
 };
