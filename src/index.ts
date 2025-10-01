@@ -1,10 +1,10 @@
 import { registerPlugin } from '@capacitor/core';
 
-import type { StripeReadersPlugin } from './definitions';
+import type { StripeTerminalPlugin } from './definitions';
 
-const StripeReaders = registerPlugin<StripeReadersPlugin>('StripeReaders', {
-  web: () => import('./web').then((m) => new m.StripeReadersWeb()),
+const StripeTerminal = registerPlugin<StripeTerminalPlugin>('StripeTerminal', {
+  web: () => import('./web').then(m => new m.StripeTerminalWeb()),
 });
 
 export * from './definitions';
-export { StripeReaders };
+export { StripeTerminal };

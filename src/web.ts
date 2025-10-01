@@ -1,10 +1,18 @@
 import { WebPlugin } from '@capacitor/core';
 
-import type { StripeReadersPlugin } from './definitions';
+import type { StripeTerminalPlugin, Reader } from './definitions';
 
-export class StripeReadersWeb extends WebPlugin implements StripeReadersPlugin {
-  async echo(options: { value: string }): Promise<{ value: string }> {
-    console.log('ECHO', options);
-    return options;
+export class StripeTerminalWeb extends WebPlugin implements StripeTerminalPlugin {
+  async initialize(options: { publishableKey: string }): Promise<void> {
+    console.log('initialize', options);
+    throw this.unimplemented('Not implemented on web.');
+  }
+
+  async discoverReaders(): Promise<{ readers: Reader[] }> {
+    throw this.unimplemented('Not implemented on web.');
+  }
+
+  async cancelDiscoverReaders(): Promise<void> {
+    throw this.unimplemented('Not implemented on web.');
   }
 }

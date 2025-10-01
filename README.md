@@ -1,37 +1,71 @@
-# stripe-readers
+# @choboellobo/capacitor-stripe-terminal
 
-Stripe plugin
+Plugin de Capacitor para Stripe Terminal que permite listar readers TapToPay en Android.
 
-## Install
+## Instalación
 
 ```bash
-npm install stripe-readers
+npm install @choboellobo/capacitor-stripe-terminal
 npx cap sync
+```
+
+## Configuración
+
+### Android
+
+Agrega los permisos necesarios en `android/app/src/main/AndroidManifest.xml`:
+
+```xml
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.BLUETOOTH" />
+<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+```
+
+## Uso
+
+```typescript
+import { StripeTerminal } from '@choboellobo/capacitor-stripe-terminal';
+
+// Inicializar
+await StripeTerminal.initialize({
+  publishableKey: 'tu_publishable_key_de_stripe'
+});
+
+// Buscar readers
+const result = await StripeTerminal.discoverReaders();
+console.log('Readers encontrados:', result.readers);
+
+// Cancelar búsqueda
+await StripeTerminal.cancelDiscoverReaders();
 ```
 
 ## API
 
-<docgen-index>
+### initialize(options)
 
-* [`echo(...)`](#echo)
+Inicializa el SDK de Stripe Terminal.
 
-</docgen-index>
+- `options.publishableKey` (string): Tu clave pública de Stripe
 
-<docgen-api>
-<!--Update the source file JSDoc comments and rerun docgen to update the docs below-->
+### discoverReaders()
 
-### echo(...)
+Busca readers TapToPay disponibles.
+
+Retorna: `Promise<{ readers: Reader[] }>`
+
+### cancelDiscoverReaders()
+
+Cancela la búsqueda de readers.
+
+## Tipos
 
 ```typescript
-echo(options: { value: string; }) => Promise<{ value: string; }>
+interface Reader {
+  id: string;
+  label: string;
+  deviceType: string;
+  isCharging?: boolean;
+  batteryLevel?: number;
+  locationId?: string;
+}
 ```
-
-| Param         | Type                            |
-| ------------- | ------------------------------- |
-| **`options`** | <code>{ value: string; }</code> |
-
-**Returns:** <code>Promise&lt;{ value: string; }&gt;</code>
-
---------------------
-
-</docgen-api>
